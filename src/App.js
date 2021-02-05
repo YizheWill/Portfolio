@@ -39,7 +39,12 @@ const bgs = [
   'https://res.cloudinary.com/willwang/image/upload/v1612494143/Screen_Shot_2021-02-04_at_7.02.17_PM_twlhkm.png',
   'https://res.cloudinary.com/willwang/image/upload/v1612494110/Screen_Shot_2021-02-04_at_7.01.13_PM_yumd7l.png',
 ];
-
+const urls = [
+  'http://www.willwang.org/',
+  'https://infinite-hunt.herokuapp.com/',
+  'http://getdevhub.herokuapp.com/#/',
+  'https://yizhewill.github.io/tensor-game/',
+];
 function useTilt(active) {
   const ref = React.useRef(null);
 
@@ -102,16 +107,20 @@ const slidesReducer = (state, event) => {
   }
 };
 
-function Slide({ slide, offset, i }) {
+function Slide({ slide, offset, i, url }) {
   const active = offset === 0 ? true : null;
   const ref = useTilt(active);
   console.log(bgs[i]);
   return (
-    <div
+    <a
+      href={url}
       ref={ref}
       className='slide'
       data-active={active}
+      target='_blank'
       style={{
+        textDecoration: 'none',
+        color: 'white',
         '--offset': offset,
         '--dir': offset === 0 ? 0 : offset > 0 ? 1 : -1,
       }}
@@ -134,7 +143,7 @@ function Slide({ slide, offset, i }) {
           <p className='slideDescription'>{slide.description}</p>
         </div>
       </div>
-    </div>
+    </a>
   );
 }
 
@@ -147,13 +156,14 @@ export default function App() {
 
       {[...slides, ...slides, ...slides].map((slide, i) => {
         let offset = slides.length + (state.slideIndex - i);
-        console.log('Math.abs(i % slides.length)', Math.abs(i % slides.length));
+        let index = Math.abs(i % slides.length);
         return (
           <Slide
             slide={slide}
             offset={offset}
             key={i}
-            i={Math.abs(i % slides.length)}
+            i={index}
+            url={urls[index]}
           />
         );
       })}
