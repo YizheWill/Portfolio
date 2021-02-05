@@ -151,23 +151,25 @@ export default function Carousel() {
   const [state, dispatch] = React.useReducer(slidesReducer, initialState);
 
   return (
-    <div className='slides'>
-      <button onClick={() => dispatch({ type: 'PREV' })}>‹</button>
+    <div className='carousel' style={{ width: '100vw', height: '100vh' }}>
+      <div className='slides'>
+        <button onClick={() => dispatch({ type: 'PREV' })}>‹</button>
 
-      {[...slides, ...slides, ...slides].map((slide, i) => {
-        let offset = slides.length + (state.slideIndex - i);
-        let index = Math.abs(i % slides.length);
-        return (
-          <Slide
-            slide={slide}
-            offset={offset}
-            key={i}
-            i={index}
-            url={urls[index]}
-          />
-        );
-      })}
-      <button onClick={() => dispatch({ type: 'NEXT' })}>›</button>
+        {[...slides, ...slides, ...slides].map((slide, i) => {
+          let offset = slides.length + (state.slideIndex - i);
+          let index = Math.abs(i % slides.length);
+          return (
+            <Slide
+              slide={slide}
+              offset={offset}
+              key={i}
+              i={index}
+              url={urls[index]}
+            />
+          );
+        })}
+        <button onClick={() => dispatch({ type: 'NEXT' })}>›</button>
+      </div>
     </div>
   );
 }
